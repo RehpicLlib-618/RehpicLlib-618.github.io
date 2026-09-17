@@ -1,14 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Géolocalisation HTML5</title>
-    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TestGéolocalisation</title>
+<style>
+  body { font-family: sans-serif; margin: 16px; line-height: 1.5; }
+  h2 { margin-top: 24px; }
+  pre { background: #eee; padding: 10px; white-space: pre-wrap; }
+  button { padding: 8px 14px; font-size: 1rem; margin-right: 8px; }
+</style>
 </head>
 <body>
 
-    <h1>Test de l'API Géolocalisation</h1>
+<h1>Test de l'API Géolocalisation</h1>
+
+<h2>getCurrentPosition()</h2>
+<button onclick="relever()">Relever la position</button>
+<pre id="once">(aucun relevé)</pre>
+
+<h2>watchPosition()</h2>
+<button onclick="demarrer()">Démarrer le suivi</button>
+<button onclick="arreter()">Arrêter</button>
+<pre id="watch">(suivi arrêté)</pre>
+
+<script>
+function afficher(id, position) {
+  var c = position.coords;
+  document.getElementById(id).textContent =
+    "Latitude  : " + c.latitude + "\n" +
+    "Longitude : " + c.longitude + "\n" +
+    "Altitude  : " + c.altitude + " m\n" +
+    "Précision : " + c.accuracy + " m\n" +
+    "Vitesse   : " + c.speed + " m/s\n" +
+    "Date      : " + new Date(position.timestamp);
+}
+
+function erreur(id, err) {
+  document.getElementById(id).textContent = "Erreur " + err.code + " : " + err.message;
+}
+
+var options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+
+//Méthode 1
+function relever() {
+  navigator.geolocation.getCurrentPosition(
+    function (pos) { afficher("once", pos); },
+    function (err) { erreur("once", err); },
+    options
+  );
+}
+
+//Méthode
+var id = null;
+
+function demarrer() {
+  if (id !== null) return;
+  id = navigator.geolocation.watchPosition(
+    function (pos) { afficher("watch", pos); },
+    function (err) { erreur("watch", err); },
+    options
+  );
+}
+
+function arreter() {
+  if (id !== null) {
+    navigator.geolocation.clearWatch(id);
+    id = null;
+  }
+}
+</script>
 
 </body>
 </html>
