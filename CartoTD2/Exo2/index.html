@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TD2 - Globe Three.js</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #02030a; }
+    #info { position: fixed; left: 12px; bottom: 12px; right: 12px; color: #fff;
+            font: 15px/1.4 sans-serif; pointer-events: none; text-shadow: 0 1px 3px #000; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="info">Chargement...</div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
